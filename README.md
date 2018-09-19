@@ -1,7 +1,3 @@
-# simpliretail
-
-> Official Simpli Retail
-
 ## Build Setup
 
 ``` bash
