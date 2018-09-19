@@ -3,13 +3,7 @@ import ApiService from '@/common/api.service'
 import LsService from '@/common/ls.service'
 import { ROW_PER_PAGE, NUMBER_OF_PAGES } from '@/common/config'
 import {
-  GET_STATE_PURCHASES,
-  GET_PROJECTS,
-  GET_PURCHASE,
-  CREATE_PURCHASE,
-  CREATE_APPROVE_PURCHASE,
-  UPDATE_PURCHASE,
-  DELETE_PURCHASE
+  GET_PROJECTS
 } from '@/store/actions.type'
 
 // initial state
@@ -71,26 +65,25 @@ const actions = {
           reject(err)
         })
     })
-  },
-  // action get  Purchase by ...
-  [GET_PURCHASE] (context, slug) {
-    context.commit('CLEAR_ERROR')
-    return new Promise((resolve, reject) => {
-      ApiService.setHeader()
-      ApiService.get('/api/purchase', slug)
-        .then(result => {
-          console.log(result, 'result purcahse')
-          resolve(result)
-          context.commit('SET_PURCHASE', result.data)
-        })
-        .catch(err => {
-          reject(err)
-          context.commit('SET_ERROR', { result: err.message })
-        })
-    })
   }
+  // action get  Purchase by ...
+  // [GET_PURCHASE] (context, slug) {
+  //   context.commit('CLEAR_ERROR')
+  //   return new Promise((resolve, reject) => {
+  //     ApiService.setHeader()
+  //     ApiService.get('/api/purchase', slug)
+  //       .then(result => {
+  //         console.log(result, 'result purcahse')
+  //         resolve(result)
+  //         context.commit('SET_PURCHASE', result.data)
+  //       })
+  //       .catch(err => {
+  //         reject(err)
+  //         context.commit('SET_ERROR', { result: err.message })
+  //       })
+  //   })
+  // }
 
-  
 }
 // mutations
 const mutations = {
