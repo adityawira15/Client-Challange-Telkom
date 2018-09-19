@@ -1,0 +1,31 @@
+{
+  "welcome" : "Selamat Datang",
+  "hello123" : "Hallo",
+  "bye123" : "Selamat Tinggal",
+  "car" : "MObil",
+  "home" : "Beranda",
+  "button" : {
+    "save" : "Simpan",
+    "save-new" : "Simpan & Baru",
+    "cancel" : "Batal",
+    "delete" : "Hapus",
+    "back" : "Kembali ke list",
+    "yes" : "Iya",
+    "close" : "Keluar",
+    "login" : "Masuk"
+  },
+  "dialog" : {
+    "delete" : {
+      "title" : "Apakah anda yakin?",
+      "content" : "Data ini akan dihapus."
+    }
+  },
+  "Name" : "Nama",
+  "DateOfBirth" : "Tanggal Lahir",
+  "PlaceOfBirth" : "Tempat Tanggal Lahir",
+  "Address" : "Alamat",
+  "Gender" : "Jenis Kelamin",
+  "Status" : "Status",
+  "Search" : "Pencarian",
+  "Required" : "{label} wajib diisi."
+}

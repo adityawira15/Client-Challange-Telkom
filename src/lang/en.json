@@ -1,0 +1,31 @@
+{
+  "welcome" : "Welcome",
+  "hello123" : "hello",
+  "bye123" : "bye",
+  "car" : "car | {count} cars",
+  "home" : "Home",
+  "button" : {
+    "save" : "Save",
+    "save-new" : "Save & New",
+    "cancel" : "Cancel",
+    "delete" : "Delete",
+    "back" : "Back to list",
+    "yes" : "Yes",
+    "close" : "Close",
+    "login" : "Login"
+  },
+  "dialog" : {
+    "delete" : {
+      "title" : "Are you sure?",
+      "content" : "This data will be deleted"
+    }
+  },
+  "Name" : "Name",
+  "DateOfBirth" : "Date Of Birth",
+  "PlaceOfBirth" : "Place Of Birth",
+  "Address" : "Address",
+  "Gender" : "Gender",
+  "Status" : "Status",
+  "Search" : "Search",
+  "Required" : "{label} is required"
+}
