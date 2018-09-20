@@ -6,11 +6,13 @@ import {
   GET_PROJECTS,
   GET_PROJECT
 } from '@/store/actions.type'
+import { GET_MEMBER } from '../actions.type'
 
 // initial state
 const state = {
   projects: [],
   project: {},
+  members: [],
   error: {},
   tablestate: {
     SortColumnName: '',
@@ -68,7 +70,7 @@ const actions = {
         })
     })
   },
-  // action get  Purchase by ...
+
   [GET_PROJECT] (context, slug) {
     context.commit('CLEAR_ERROR')
     return new Promise((resolve, reject) => {
@@ -84,11 +86,35 @@ const actions = {
           context.commit('SET_ERROR', { result: err.message })
         })
     })
+  },
+
+  // action get  Purchase by ...
+  [GET_MEMBER] (context) {
+    context.commit('CLEAR_ERROR')
+    return new Promise((resolve, reject) => {
+      ApiService.setHeader()
+      ApiService.get('http://backend-challange-telkom.herokuapp.com/api/users')
+        .then(result => {
+          console.log(result.data, 'result membur')
+          resolve(result)
+          context.commit('SET_MEMBERS', { results: result.data })
+        })
+        .catch(err => {
+          reject(err)
+          context.commit('SET_ERROR', { result: err.message })
+        })
+    })
   }
 
 }
 // mutations
 const mutations = {
+
+  SET_MEMBERS (state, { results }) {
+    console.log(results)
+    state.members = results.data
+    state.paginations.pageLength = results.numberOfPages
+  },
   SET_PROJECTS (state, { results }) {
     state.projects = results.data
     state.paginations.pageLength = results.numberOfPages

@@ -40,10 +40,8 @@
                   <thead>
                     <tr> <th>No</th> <th>Nama</th> <th>Stream</th> </tr>
                   </thead>
-                  <tbody>
-                    <tr> <td>1</td> <td>Budi Artianto</td> <td>Backend</td> </tr>
-                    <tr> <td>2</td> <td>Tono Budiman</td> <td>Backend</td> </tr>
-                    <tr> <td>3</td> <td>Wawan Aja</td> <td>Front End</td> </tr>
+                  <tbody v-for="(item, index) in members" :key="index">
+                    <tr> <td>{{ index + 1 }}</td> <td>{{ item.name }}</td> <td>{{ item.stream }}</td> </tr>
                   </tbody>
                 </table>
               </div>
@@ -120,7 +118,7 @@
 <script>
 import axios from 'axios'
 // import FormWarehouse from '@/components/warehouse/Form'
-import { GET_PROJECT, GET_PROJECTS } from '@/store/actions.type'
+import { GET_PROJECT, GET_PROJECTS, GET_MEMBER } from '@/store/actions.type'
 
 export default {
   components: {
@@ -145,12 +143,16 @@ export default {
     },
     items () {
       return this.$store.state.project.projects
+    },
+    members () {
+      return this.$store.state.project.members
     }
  },
  mounted () {
    console.log(this.id);
     this.$store.dispatch(GET_PROJECT, this.id)
     this.$store.dispatch(GET_PROJECTS)
+    this.$store.dispatch(GET_MEMBER)
   },
   methods: {
     setProject(value) {
