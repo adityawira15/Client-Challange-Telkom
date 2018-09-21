@@ -26,8 +26,8 @@
                 <div> : {{ project.stakeHolder }} </div>
                 <div> : {{ project.sprint }} </div>
                 <br>
-                <div> : 12/06/2018 </div>
-                <div> : 22/06/2018 (10 hari lagi) </div>
+                <div> : {{ project.startDate }}</div>
+                <div> : {{ project.endDate }}</div>
               </div>
             </div>  
           </div>
@@ -62,10 +62,8 @@
                   <thead>
                     <tr> <th>No</th> <th>Nama</th> <th>Stream</th> <th>Point Burn</th> <th>Point Remaining</th> <th>Point Queue</th> </tr>
                   </thead>
-                  <tbody>
-                    <tr> <td>1</td> <td>Budi Artianto</td> <td>Backend</td> <td>105</td> <td>30</td> <td>30</td> </tr>
-                    <tr> <td>2</td> <td>Tono Budiman</td> <td>Backend</td> <td>102</td> <td>32</td> <td>12</td></tr>
-                    <tr> <td>3</td> <td>Wawan Aja</td> <td>Front End</td> <td>109</td> <td>32</td> <td>25</td></tr>
+                  <tbody v-for="(item, index) in members" :key="index">
+                    <tr> <td>{{ index + 1 }}</td> <td>{{ item.name }}</td> <td>{{ item.stream }}</td> <td>{{ item.pointBurn }}</td> <td>{{ item.pointRemaining }}</td> <td>{{ item.pointQueue }}</td> </tr>
                   </tbody>
                 </table>
               </div>

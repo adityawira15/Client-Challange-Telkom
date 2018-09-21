@@ -19,9 +19,8 @@
               <tbody>
                 <tr v-for="(item, index) in items">
                   <td style="text-align: center">{{ index + 1 }}</td>
-                  <td>{{ item.name }}</td>
                   <td>
-                       <router-link :to="'/project/detail/' + item._id">{{ item.name }}</router-link>
+                      <router-link :to="'/project/detail/' + item._id">{{ item.name }}</router-link>
                   </td>
                   <td>{{ item.unit }}</td>
                   <td>{{ item.stakeHolder }}</td>
@@ -52,8 +51,8 @@
           <div class="card cardProject">
             <div class="card-block">
               <h4 class="card-title">Best Product Perfomance</h4>
-              <ul v-for="item in perfomance" class="ulPerfomance">
-                <li class="listBestProject d-flex justify-content-between align-items-center"> {{ item.no }}.{{ item.nama_project }}
+              <ul v-for="(item,index) in productPerfomances" class="ulPerfomance">
+                <li class="listBestProject d-flex justify-content-between align-items-center"> {{ index + 1 }}.{{ item.name }}
                   <span class="badge  badge-pill">
                     <img style="width: 15px; " src="../../assets/img/triangle-down.png">
                     {{ item.score }}
@@ -74,8 +73,8 @@
           <div class="card cardProject">
             <div class="card-block">
               <h4 class="card-title">Best Squad Perfomance</h4>
-              <ul v-for="item in perfomance" class="ulPerfomance">
-                <li class="listBestProject d-flex justify-content-between align-items-center"> {{ item.no }}.{{ item.nama_project }}
+              <ul v-for="(item, index) in squadPerfomances" class="ulPerfomance">
+                <li class="listBestProject d-flex justify-content-between align-items-center"> {{ index + 1 }}.{{ item.name }}
                   <span class="badge  badge-pill">
                     <img style="width: 15px; " src="../../assets/img/triangle-down.png">
                     {{ item.score }}
@@ -164,7 +163,7 @@
 <script>
 import ButtonCreate from '@/components/UIComponents/Buttons/ButtonCreate'
 import Alert from '@/components/UIComponents/Alerts/Default'
-import { GET_STATE_WAREHOUSES, GET_PROJECTS } from '@/store/actions.type'
+import { GET_STATE_WAREHOUSES, GET_PROJECTS, GET_PRODUCTPERFOMANCES, GET_SQUADPERFOMANCES } from '@/store/actions.type'
 import LsService from '@/common/ls.service'
 import { ROW_PER_PAGE } from '@/common/config'
 import { mapGetters } from 'vuex'
@@ -190,21 +189,6 @@ export default {
       { key: 'status', label: 'Status' },
 
       ],
-      // items: [
-      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'},
-      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Rejected'},
-      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'On Going'},
-      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'In Queue'},
-      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'}
-      // ],
-      perfomance: [
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
-      ],
       talent: [
       { 'name': 'UX', 'score': 3, 'type': 'floating'},
       { 'name': 'UX', 'score': 3, 'type': 'floating'},
@@ -229,36 +213,21 @@ export default {
   },
   computed: {
     items () {
-      console.log(this.$store.state.project, 'items');
       return this.$store.state.project.projects
     },
-    // pages () {
-    //   return this.$store.state.warehouse.paginations.pageLength
-    // },
-    // currentPages () {
-    //   return this.$store.state.warehouse.paginations.currentPage
-    // }
+    productPerfomances () {
+      return this.$store.state.project.productperfomances
+    },
+    squadPerfomances () {
+      return this.$store.state.project.squadperfomances
+    }
   },
   methods: {
   },
   created () {
-    this.$store.dispatch(GET_PROJECTS).then((result) => {
-      console.log(result)
-    })
-    // this.$store.dispatch(GET_STATE_WAREHOUSES)
-    //   .then((result) => {
-    //       const a =_.allKeys(result.data.data[0])
-    //       const b = _.filter(a,(o)=>{
-    //         if(o!=='CreatedTime' &&  o!=='ModifiedTime' 
-    //         &&  o!=='ModifiedBy' 
-    //         &&  o!=='Deleted' &&  o!=='RowVersion'){
-    //           this.headers.push({text:o,value:o})
-    //         }
-    //       })
-    //   })
-    //   .catch((err) => {
-    //     this.SetAlert('error', err.message)
-    //   })
+    this.$store.dispatch(GET_PROJECTS).then((result) => { console.log(result) })
+    this.$store.dispatch(GET_PRODUCTPERFOMANCES).then((result) => { console.log(result) })
+    this.$store.dispatch(GET_SQUADPERFOMANCES).then((result) => { console.log(result) })
   }
 }
 </script>

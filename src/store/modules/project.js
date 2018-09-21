@@ -4,7 +4,9 @@ import LsService from '@/common/ls.service'
 import { ROW_PER_PAGE, NUMBER_OF_PAGES } from '@/common/config'
 import {
   GET_PROJECTS,
-  GET_PROJECT
+  GET_PROJECT,
+  GET_PRODUCTPERFOMANCES,
+  GET_SQUADPERFOMANCES
 } from '@/store/actions.type'
 import { GET_MEMBER } from '../actions.type'
 
@@ -13,6 +15,8 @@ const state = {
   projects: [],
   project: {},
   members: [],
+  productperfomances: [],
+  squadperfomances: [],
   error: {},
   tablestate: {
     SortColumnName: '',
@@ -53,7 +57,7 @@ const getters = {
 }
 // actions
 const actions = {
-  // action get Purchases
+
   [GET_PROJECTS] (context) {
     context.commit('CLEAR_ERROR')
     return new Promise((resolve, reject) => {
@@ -62,6 +66,42 @@ const actions = {
         .then(result => {
           console.log(result, 'dari project')
           context.commit('SET_PROJECTS', { results: result.data })
+          resolve(result)
+        })
+        .catch(err => {
+          context.commit('SET_ERROR', { result: err.message })
+          reject(err)
+        })
+    })
+  },
+
+  // action get Purchases
+  [GET_PRODUCTPERFOMANCES] (context) {
+    context.commit('CLEAR_ERROR')
+    return new Promise((resolve, reject) => {
+      ApiService.setHeader()
+      ApiService.get('http://backend-challange-telkom.herokuapp.com/api/productperformance')
+        .then(result => {
+          console.log(result, 'dari project')
+          context.commit('SET_PRODUCTPERFOMANCES', { results: result.data })
+          resolve(result)
+        })
+        .catch(err => {
+          context.commit('SET_ERROR', { result: err.message })
+          reject(err)
+        })
+    })
+  },
+
+  // action get Purchases
+  [GET_SQUADPERFOMANCES] (context) {
+    context.commit('CLEAR_ERROR')
+    return new Promise((resolve, reject) => {
+      ApiService.setHeader()
+      ApiService.get('http://backend-challange-telkom.herokuapp.com/api/squadperformance')
+        .then(result => {
+          console.log(result, 'dari project')
+          context.commit('SET_SQUADPERFOMANCES', { results: result.data })
           resolve(result)
         })
         .catch(err => {
@@ -113,6 +153,16 @@ const mutations = {
   SET_MEMBERS (state, { results }) {
     console.log(results)
     state.members = results.data
+    state.paginations.pageLength = results.numberOfPages
+  },
+  SET_PRODUCTPERFOMANCES (state, { results }) {
+    console.log(results)
+    state.productperfomances = results.data
+    state.paginations.pageLength = results.numberOfPages
+  },
+  SET_SQUADPERFOMANCES (state, { results }) {
+    console.log(results)
+    state.squadperfomances = results.data
     state.paginations.pageLength = results.numberOfPages
   },
   SET_PROJECTS (state, { results }) {
