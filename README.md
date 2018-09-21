@@ -1,3 +1,11 @@
+## Name Team epicVision
+
+## Name Member
+
+### - Aditya wira nugraha
+### - Ridho gusti
+### - Kukuh baiquni
+
 ## Build Setup
 
 ``` bash
