@@ -3,13 +3,16 @@ import ApiService from '@/common/api.service'
 import LsService from '@/common/ls.service'
 import { ROW_PER_PAGE, NUMBER_OF_PAGES } from '@/common/config'
 import {
-  GET_PROJECTS
+  GET_PROJECTS,
+  GET_PROJECT
 } from '@/store/actions.type'
+import { GET_MEMBER } from '../actions.type'
 
 // initial state
 const state = {
-  purchases: [],
-  purchase: {},
+  projects: [],
+  project: {},
+  members: [],
   error: {},
   tablestate: {
     SortColumnName: '',
@@ -57,6 +60,7 @@ const actions = {
       ApiService.setHeader()
       ApiService.get('http://backend-challange-telkom.herokuapp.com/api/projects')
         .then(result => {
+          console.log(result, 'dari project')
           context.commit('SET_PROJECTS', { results: result.data })
           resolve(result)
         })
@@ -65,38 +69,62 @@ const actions = {
           reject(err)
         })
     })
-  }
+  },
+
+  [GET_PROJECT] (context, slug) {
+    context.commit('CLEAR_ERROR')
+    return new Promise((resolve, reject) => {
+      ApiService.setHeader()
+      ApiService.get('http://backend-challange-telkom.herokuapp.com/api/projects', slug)
+        .then(result => {
+          console.log(result, 'result project')
+          resolve(result)
+          context.commit('SET_PROJECT', result.data.data)
+        })
+        .catch(err => {
+          reject(err)
+          context.commit('SET_ERROR', { result: err.message })
+        })
+    })
+  },
+
   // action get  Purchase by ...
-  // [GET_PURCHASE] (context, slug) {
-  //   context.commit('CLEAR_ERROR')
-  //   return new Promise((resolve, reject) => {
-  //     ApiService.setHeader()
-  //     ApiService.get('/api/purchase', slug)
-  //       .then(result => {
-  //         console.log(result, 'result purcahse')
-  //         resolve(result)
-  //         context.commit('SET_PURCHASE', result.data)
-  //       })
-  //       .catch(err => {
-  //         reject(err)
-  //         context.commit('SET_ERROR', { result: err.message })
-  //       })
-  //   })
-  // }
+  [GET_MEMBER] (context) {
+    context.commit('CLEAR_ERROR')
+    return new Promise((resolve, reject) => {
+      ApiService.setHeader()
+      ApiService.get('http://backend-challange-telkom.herokuapp.com/api/users')
+        .then(result => {
+          console.log(result.data, 'result membur')
+          resolve(result)
+          context.commit('SET_MEMBERS', { results: result.data })
+        })
+        .catch(err => {
+          reject(err)
+          context.commit('SET_ERROR', { result: err.message })
+        })
+    })
+  }
 
 }
 // mutations
 const mutations = {
+
+  SET_MEMBERS (state, { results }) {
+    console.log(results)
+    state.members = results.data
+    state.paginations.pageLength = results.numberOfPages
+  },
   SET_PROJECTS (state, { results }) {
-    state.purchases = results.data.filter(item => item.Type === 0)
+    state.projects = results.data
     state.paginations.pageLength = results.numberOfPages
   },
   SET_SUPPLIER_ID (state, result) {
     console.log(result, 'aosenuth')
     state.supplier_id = result
   },
-  SET_PURCHASE (state, result) {
-    state.purchase = result
+  SET_PROJECT (state, result) {
+    state.project = result
   },
   CLEAR_PURCHASE (state) {
     state.purchase = {}

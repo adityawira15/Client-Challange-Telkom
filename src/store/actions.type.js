@@ -6,6 +6,8 @@ export const CHECK_AUTH = 'checkAuth'
 // stock actions
 export const GET_STATE_STOCKS = 'getStateStocks'
 export const GET_PROJECTS = 'getProjects'
+export const GET_PROJECT = 'getProject'
+export const GET_MEMBER = 'getMember'
 export const SEARCH_STOCKS = 'searchStocks'
 export const SORT_STOCKS = 'sortStocks'
 export const GET_STOCK = 'getStock'

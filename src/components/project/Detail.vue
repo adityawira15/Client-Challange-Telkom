@@ -3,7 +3,6 @@
     <div class="container">
       <div class="card cardProject">
         <div class="row">
-
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-3">
@@ -19,15 +18,13 @@
               </div>
               <div class="col-md-9">
                 <select v-model="value" v-on:change="setProject(value)" class="custom-select">
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <option v-for="item in items" :value="item._id" :key="item.id">{{ item.name }}</option>
                 </select>
                 <br>
                 <br>
-                <div> : This is sample description about project </div>
-                <div> : DEGM </div>
-                <div> : 4 </div>
+                <div> : {{ project.description }}</div>
+                <div> : {{ project.stakeHolder }} </div>
+                <div> : {{ project.sprint }} </div>
                 <br>
                 <div> : 12/06/2018 </div>
                 <div> : 22/06/2018 (10 hari lagi) </div>
@@ -43,10 +40,8 @@
                   <thead>
                     <tr> <th>No</th> <th>Nama</th> <th>Stream</th> </tr>
                   </thead>
-                  <tbody>
-                    <tr> <td>1</td> <td>Budi Artianto</td> <td>Backend</td> </tr>
-                    <tr> <td>2</td> <td>Tono Budiman</td> <td>Backend</td> </tr>
-                    <tr> <td>3</td> <td>Wawan Aja</td> <td>Front End</td> </tr>
+                  <tbody v-for="(item, index) in members" :key="index">
+                    <tr> <td>{{ index + 1 }}</td> <td>{{ item.name }}</td> <td>{{ item.stream }}</td> </tr>
                   </tbody>
                 </table>
               </div>
@@ -123,7 +118,7 @@
 <script>
 import axios from 'axios'
 // import FormWarehouse from '@/components/warehouse/Form'
-// import { GET_WAREHOUSE, UPDATE_WAREHOUSE, DELETE_WAREHOUSE } from '@/store/actions.type'
+import { GET_PROJECT, GET_PROJECTS, GET_MEMBER } from '@/store/actions.type'
 
 export default {
   components: {
@@ -143,44 +138,26 @@ export default {
     }
   },
   computed: {
-   // warehouse () {
-   //    return this.$store.state.warehouse.warehouse
-   //  }
+   project () {
+      return this.$store.state.project.project
+    },
+    items () {
+      return this.$store.state.project.projects
+    },
+    members () {
+      return this.$store.state.project.members
+    }
  },
  mounted () {
-    // this.$store.dispatch(GET_WAREHOUSE, this.id)
+   console.log(this.id);
+    this.$store.dispatch(GET_PROJECT, this.id)
+    this.$store.dispatch(GET_PROJECTS)
+    this.$store.dispatch(GET_MEMBER)
   },
   methods: {
     setProject(value) {
-      console.log(value)
+      this.$store.dispatch(GET_PROJECT, value)
     }
-    // deleted () {
-    //   this.$store.dispatch(DELETE_WAREHOUSE, this.id)
-    //   .then((response) => {
-    //     this.$router.push({ path: '/warehouse' })
-    //   }).catch((err) => {
-    //     this.alert = {
-    //       status: true,
-    //       type: 'error',
-    //       message: err.message
-    //     }
-    //   });
-    // },
-    // save () {
-    //   this.loadingBtnSave = true
-    //   this.$store.dispatch(UPDATE_WAREHOUSE, this.warehouse)
-    //   .then((response) => {
-    //     this.loadingBtnSave = false
-    //     this.$router.push({ path: '/warehouse' })
-    //   }).catch((err) => {
-    //     this.alert = {
-    //       status: true,
-    //       type: 'error',
-    //       message: err.message
-    //     }
-    //     this.loadingBtnSave = false
-    //   })
-    // }
   }
 }
 </script>

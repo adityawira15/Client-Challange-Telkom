@@ -17,11 +17,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in items">
-                  <td style="text-align: center">{{ item.no }}</td>
-                  <td>{{ item.nama_project }}</td>
+                <tr v-for="(item, index) in items">
+                  <td style="text-align: center">{{ index + 1 }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>
+                       <router-link :to="'/project/detail/' + item._id">{{ item.name }}</router-link>
+                  </td>
                   <td>{{ item.unit }}</td>
-                  <td>{{ item.stakeholder }}</td>
+                  <td>{{ item.stakeHolder }}</td>
                   <td>{{ item.sprint }}</td>
                   <td v-if="item.status == 'Complete'">
                     <span class="text-success">{{ item.status }}</span>
@@ -187,13 +190,13 @@ export default {
       { key: 'status', label: 'Status' },
 
       ],
-      items: [
-      { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'},
-      { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Rejected'},
-      { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'On Going'},
-      { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'In Queue'},
-      { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'}
-      ],
+      // items: [
+      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'},
+      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Rejected'},
+      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'On Going'},
+      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'In Queue'},
+      // { 'no': 1, 'nama_project': 'Teman Berbagi', 'unit': 'TNT', 'stakeholder': 'TNT', 'sprint': 15, 'status': 'Complete'}
+      // ],
       perfomance: [
       { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
       { 'no': 1, 'nama_project': 'MyIndihome', 'score': 3},
@@ -225,9 +228,10 @@ export default {
     }
   },
   computed: {
-    // items () {
-    //   return this.$store.state.warehouse.warehouses
-    // },
+    items () {
+      console.log(this.$store.state.project, 'items');
+      return this.$store.state.project.projects
+    },
     // pages () {
     //   return this.$store.state.warehouse.paginations.pageLength
     // },

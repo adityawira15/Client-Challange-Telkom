@@ -50,7 +50,7 @@ export default new Router({
             //   component: StockCreate
             // },
             {
-              path: 'detail',
+              path: 'detail/:id',
               name: 'project-detail',
               meta: 'Detail',
               props: true,
@@ -121,7 +121,7 @@ export default new Router({
         //   ]
         // }
       ]
-    },
+    }
   ]
 
 // end routes
